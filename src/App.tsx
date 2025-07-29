@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 
 function App() {
   const [qrCodeText, setQrCodeText] = useState('');
   const [scanning, setScanning] = useState(false);
-  const qrRef = useRef(null);
+  const qrRef = useRef<Html5Qrcode | null>(null);
   const scannerId = 'reader';
 
   const iniciarLeitura = async () => {
@@ -22,12 +22,12 @@ function App() {
         await html5QrCode.start(
           cameraId,
           { fps: 10, qrbox: 250 },
-          (decodedText, decodedResult) => {
+          (decodedText) => {
             setQrCodeText(decodedText);
             pararLeitura();
           },
           (error) => {
-            // erros silenciosos de leitura
+            console.log(error);
           }
         );
       }
